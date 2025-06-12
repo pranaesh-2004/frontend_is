@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { format } from 'date-fns';
@@ -43,7 +43,13 @@ export default function FoodPage() {
     });
   }, [id]);
 
-  const fetchReviews = async () => {
+  useEffect(() => {
+    if (food?.quantities?.length > 0) {
+      setSelectedSize(food.quantities[0].size);
+    }
+  }, [food]);
+
+  const fetchReviews = useCallback(async () => {
     try {
       const res = await axios.get(`/api/reviews/product/${id}`);
       const fetchedReviews = res.data;
@@ -64,11 +70,11 @@ export default function FoodPage() {
       setAvgRating(0);
       setRatingStats({ 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 });
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchReviews();
-  }, [id]);
+  }, [id, fetchReviews]);
 
   const handleAddToCart = () => {
     if (food && selectedSize) {
@@ -80,7 +86,7 @@ export default function FoodPage() {
   const getDiscountedPrice = (price, discount) =>
     discount ? price - (price * discount) / 100 : price;
 
-  const isFavorite = isInWishlist(food?.id);
+  const isFavorite = isInWishlist(food?._id);
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -150,6 +156,7 @@ export default function FoodPage() {
           <button
             className={`${classes.favoriteButton} ${isFavorite ? classes.active : ''}`}
             onClick={() => toggleWishlist(food)}
+            title={isFavorite ? "Remove from Wishlist" : "Add to Wishlist"}
           >
             {isFavorite ? '❤' : '♡'}
           </button>

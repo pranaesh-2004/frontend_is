@@ -6,33 +6,32 @@ import {
   removeFromWishlist,
 } from '../services/wishlistService';
 
+// In usewishlist.js
 export function useWishlist() {
   const { user } = useAuth();
   const [wishlist, setWishlist] = useState([]);
 
-  useEffect(() => {
+  const refreshWishlist = async () => {
     if (user) {
-      fetchWishlist().then(setWishlist).catch(console.error);
-    } else {
-      setWishlist([]);
+      const data = await fetchWishlist();
+      setWishlist(data);
     }
+  };
+
+  useEffect(() => {
+    refreshWishlist();
+    // eslint-disable-next-line
   }, [user]);
 
   const toggleWishlist = async (product) => {
     if (!user) return;
-
     const exists = wishlist.find(i => i._id === product._id);
-    let updatedWishlist;
-
     if (exists) {
       await removeFromWishlist(product._id);
-      updatedWishlist = wishlist.filter(i => i._id !== product._id);
     } else {
-      const addedProduct = await addToWishlist(product._id);
-      updatedWishlist = [...wishlist, addedProduct];
+      await addToWishlist(product._id);
     }
-
-    setWishlist(updatedWishlist);
+    await refreshWishlist(); // <-- force re-fetch after toggle
   };
 
   const isInWishlist = (productId) => {
