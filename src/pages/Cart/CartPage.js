@@ -15,6 +15,7 @@ export default function CartPage() {
   const prepaidDiscount = Math.floor((totalPrice - discount) * 0.02);
   const toPay = Math.floor((totalPrice - discount) - prepaidDiscount);
   const savings = discount + prepaidDiscount;
+  console.log('cart items:', cart.items);
 
   return (
     <div className={classes.cart_wrapper}>
@@ -32,23 +33,30 @@ export default function CartPage() {
 
           <div className={classes.cart_items}>
             {cart.items.map(item => (
-              <div key={`${item.food._id}-${item.size}`} className={classes.cart_item}>
-                <img src={item.food.images?.[0]} alt={item.food.name} className={classes.product_img} />
-                <div className={classes.cart_info}>
-                  <h4>{item.food.name} <span className={classes.size}>({item.size})</span></h4>
-                  <div className={classes.price_qty}>
-                    <Price price={item.price} />
-                    <div className={classes.qty}>
-                      <button onClick={() => changeQuantity(item, item.quantity - 1)} disabled={item.quantity === 1}>-</button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => changeQuantity(item, item.quantity + 1)}>+</button>
+              item.food && (
+                <div key={item.food._id + item.size} className={classes.cart_item}>
+                  <img src={item.food.images?.[0]} alt={item.food.name} className={classes.product_img} />
+                  <div className={classes.cart_info}>
+                    <h4>{item.food.name} <span className={classes.size}>({item.size})</span></h4>
+                    <div className={classes.price_qty}>
+                      <Price price={item.price} />
+                      <div className={classes.qty}>
+                        <button
+                          onClick={() => changeQuantity(item, item.quantity - 1)}
+                          disabled={item.quantity === 1}
+                        >-</button>
+                        <span>{item.quantity}</span>
+                        <button
+                          onClick={() => changeQuantity(item, item.quantity + 1)}
+                        >+</button>
+                      </div>
                     </div>
+                    <button onClick={() => removeFromCart(item.food._id, item.size)} className={classes.remove_btn}>
+                      <FaTrash /> Remove
+                    </button>
                   </div>
-                  <button onClick={() => removeFromCart(item.food._id, item.size)} className={classes.remove_btn}>
-                    <FaTrash /> Remove
-                  </button>
                 </div>
-              </div>
+              )
             ))}
           </div>
 
@@ -84,3 +92,4 @@ export default function CartPage() {
     </div>
   );
 }
+

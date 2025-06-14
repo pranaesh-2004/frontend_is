@@ -60,8 +60,8 @@ h1, h2, h3, h4 {
 /* =============== HERO SECTION =============== */
 .hero-section {
   position: relative;
-  height: 100vh;
-  min-height: 800px;
+  height: 50vh;
+  min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@ h1, h2, h3, h4 {
   height: 100%;
   background: 
     radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
-    radial-gradient(circle at 85% 75%, rgba(0, 0, 0, 0.1) 0%, transparent 30%);
+    radial-gradient(circle at 85% 75%, rgba(9, 6, 6, 0.1) 0%, transparent 30%);
 }
 
 .hero-content {
@@ -96,14 +96,19 @@ h1, h2, h3, h4 {
 }
 
 .hero-title {
-  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 900;
-  letter-spacing: 1px;
-  color: var(--white);
-  margin-bottom: 1.5rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-  position: relative;
-  animation: slideDown 1s ease;
+  text-align: center;
+  color: #fff; /* white text for visibility */
+  text-shadow:
+    2px 2px 6px rgba(0, 0, 0, 0.7), /* dark glow for contrast */
+    0 0 10px rgba(0, 0, 0, 0.3);    /* subtle blur */
+  margin: 0 auto 1rem;
+  padding: 0 1rem;
+  white-space: nowrap; /* keeps it in a single line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: fadeInDown 1.2s ease-out;
 }
 
 .hero-title span {
@@ -125,7 +130,7 @@ h1, h2, h3, h4 {
 }
 
 .hero-subtitle {
-  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-size: clamp(0.5rem, 2vw, 2rem);
   color: rgba(255, 255, 255, 0.95);
   margin: 2rem auto 3.5rem;
   font-weight: 500;
@@ -146,47 +151,94 @@ h1, h2, h3, h4 {
 @media (max-width: 768px) {
   .hero-section {
     height: auto;
-    min-height: 80vh;
+    min-height: 60vh;
+    background-position: center center;
+    padding: 2rem 1rem;
     background-attachment: scroll;
-    background-position: center;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
   }
 
   .hero-content {
-    padding: 2rem 1.5rem;
+    padding: 1rem;
   }
 
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 1.6rem; /* Smaller size for mobile */
+    font-weight: 700;
+    white-space: normal; /* Allow wrapping if needed */
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title span::after {
+    width: 60px;
+    height: 2px;
+    bottom: -5px;
   }
 
   .hero-subtitle {
-    font-size: 1.3rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    padding: 0 1rem;
+    margin: 1rem auto 2rem;
+  }
+
+  .search-container {
+    max-width: 100%;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .search-container input[type="text"],
+  .search-container input[type="search"] {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .search-container button,
+  .search-icon {
+    font-size: 1rem; /* smaller icon or button */
+    padding: 6px 10px;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
   .hero-section {
-    min-height: 75vh;
+    padding: 1.2rem 0.8rem;
+    min-height: 50vh;
   }
 
   .hero-title {
-    font-size: 2.4rem;
+    font-size: 1.3rem;
+    line-height: 1.2;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    margin: 1rem auto 1.5rem;
+  }
+
+  .search-container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .search-container input[type="text"],
+  .search-container input[type="search"] {
+    width: 100%;
+  }
+
+  .search-container button,
+  .search-icon {
+    font-size: 0.9rem;
+    padding: 5px 8px;
   }
 }
 
-
-.search-container {
-  max-width: 750px;
-  margin: 0 auto;
-  width: 100%;
-  animation: fadeInUp 1s ease 0.5s both;
-}
 
 /* Section Styling */
 .section {
@@ -205,7 +257,7 @@ h1, h2, h3, h4 {
 }
 
 .section-title {
-  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+  font-size: clamp(1.2rem, 3vw, 2rem);
   text-align: center;
   margin-bottom: 5rem;
   position: relative;
@@ -231,10 +283,14 @@ h1, h2, h3, h4 {
 }
 
 .filter-container {
+  max-width: 600px;
+  width: 100%;
+  margin: -3rem auto 2rem auto; /* Negative top margin moves it up */
+  padding: 0 1rem;
   text-align: center;
-  margin-bottom: 5rem;
   color: var(--gold-light);
 }
+
 
 /* =============== WHY CHOOSE US =============== */
 .why-choose-section {
@@ -268,7 +324,7 @@ h1, h2, h3, h4 {
 .benefit-card {
   background: var(--gold-light);
   border-radius: var(--border-radius);
-  padding: 3rem 2.5rem;
+  padding: 2rem 2.5rem;
   text-align: center;
   transition: var(--transition);
   backdrop-filter: blur(8px);

@@ -7,7 +7,7 @@ import DateTime from '../../components/DateTime/DateTime';
 import Price from '../../components/Price/Price';
 import NotFound from '../../components/NotFound/NotFound';
 import Loading from '../../components/Loading/Loading';
-import { FaMapMarkerAlt, FaRedoAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaRedoAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const initialState = { allStatus: [], orders: [], loading: true };
 const reducer = (state, action) => {
@@ -55,7 +55,7 @@ export default function OrdersPage() {
 
   return (
     <div className={classes.container}>
-      <Title title="Your Orders" margin="0 0 1.5rem 0" fontSize="2rem" />
+      <Title title="Your Orders" margin="0 0 2rem 0" fontSize="2.2rem" />
 
       {allStatus && (
         <div className={classes.filter_tabs}>
@@ -94,18 +94,23 @@ export default function OrdersPage() {
                 className={classes.order_header}
                 onClick={() => toggleOrderExpand(order._id)}
               >
-                <div className={classes.order_id}>Order #{order._id}</div>
+                <div className={classes.order_info}>
+                  <div className={classes.order_id}>Order #{order._id}</div>
+                  <div className={classes.order_date}>
+                    <DateTime date={order.createdAt} />
+                  </div>
+                </div>
+                
                 <div className={classes.order_status} data-status={order.status}>
                   {order.status}
                 </div>
-                <div className={classes.order_date}>
-                  <DateTime date={order.createdAt} />
-                </div>
+                
                 <div className={classes.order_total}>
-                  Total: <Price price={order.totalPrice} />
+                  <Price price={order.totalPrice} />
                 </div>
+                
                 <div className={classes.expand_icon}>
-                  {expandedOrder === order._id ? '−' : '+'}
+                  {expandedOrder === order._id ? <FaChevronUp /> : <FaChevronDown />}
                 </div>
               </div>
 
@@ -122,10 +127,14 @@ export default function OrdersPage() {
                           <img 
                             src={item.product.images?.[0]} 
                             alt={item.product.name} 
+                            loading="lazy"
                           />
                         </div>
                         <div className={classes.item_info}>
-                          <div className={classes.item_name}>{item.product.name} <span className={classes.size}>({item.size})</span></div>
+                          <div className={classes.item_name}>
+                            {item.product.name} 
+                            <span className={classes.size}>({item.size})</span>
+                          </div>
                           <div className={classes.item_quantity}>Quantity: {item.quantity}</div>
                           <div className={classes.item_price}>
                             <Price price={item.price} />
@@ -140,10 +149,10 @@ export default function OrdersPage() {
                       to={`/track/${order._id}`} 
                       className={classes.track_button}
                     >
-                      <FaMapMarkerAlt /> Track Order
+                      <FaMapMarkerAlt className={classes.action_icon} /> Track Order
                     </Link>
                     <button className={classes.reorder_button}>
-                      <FaRedoAlt /> Reorder
+                      <FaRedoAlt className={classes.action_icon} /> Reorder
                     </button>
                   </div>
                 </div>
