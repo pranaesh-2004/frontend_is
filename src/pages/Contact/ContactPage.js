@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import './ContactPage.css';
 
@@ -15,6 +16,14 @@ export default function ContactPage() {
 
   return (
     <div className="contact-page" style={{ backgroundColor: bgColor }}>
+=======
+import React from 'react';
+import './ContactPage.css';
+
+export default function ContactPage() {
+  return (
+    <div className="contact-page">
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
       <section className="contact-header">
         <div className="contact-header-left">
           <h2>Contact Us</h2>

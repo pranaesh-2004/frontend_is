@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import './AboutUs.css';
 
@@ -16,6 +17,14 @@ export default function AboutUs() {
 
   return (
     <div className="about-section" style={{ backgroundColor: bgColor }}>
+=======
+import React from 'react';
+import './AboutUs.css';
+
+export default function AboutUs() {
+  return (
+    <div className="about-section">
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
       <div className="about-container">
         <h2 className="about-heading">
           <span className="heading-line">About Us</span>
@@ -74,4 +83,8 @@ export default function AboutUs() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434

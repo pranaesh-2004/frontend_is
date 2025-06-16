@@ -1,15 +1,23 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
 import { Link } from 'react-router-dom';
 import Price from '../../components/Price/Price';
 import Title from '../../components/Title/Title';
 import { useCart } from '../../hooks/useCart';
 import { FaTrash, FaLock, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
 import classes from './cartPage.module.css';
 
 export default function CartPage() {
   const { cart, removeFromCart, changeQuantity } = useCart();
   const [showSummary, setShowSummary] = useState(false);
+<<<<<<< HEAD
   const [bgColor, setBgColor] = useState('#ffffff'); // Default white
 
   useEffect(() => {
@@ -26,6 +34,18 @@ export default function CartPage() {
 
   return (
     <div className={classes.cart_wrapper} style={{ backgroundColor: bgColor }}>
+=======
+
+  const totalPrice = cart.totalPrice;
+  const discount = Math.floor(totalPrice * 0.05); // assume 5% offer
+  const prepaidDiscount = Math.floor((totalPrice - discount) * 0.02);
+  const toPay = Math.floor((totalPrice - discount) - prepaidDiscount);
+  const savings = discount + prepaidDiscount;
+  console.log('cart items:', cart.items);
+
+  return (
+    <div className={classes.cart_wrapper}>
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
       <Title title="Your Cart" fontSize="1.5rem" />
 
       {cart.items.length === 0 ? (
@@ -36,6 +56,11 @@ export default function CartPage() {
         </div>
       ) : (
         <>
+<<<<<<< HEAD
+=======
+          
+
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
           <div className={classes.cart_items}>
             {cart.items.map(item => (
               item.food && (
@@ -65,6 +90,10 @@ export default function CartPage() {
             ))}
           </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
           {showSummary && (
             <div className={classes.summary_box}>
               <h4>Price Summary</h4>
@@ -96,3 +125,7 @@ export default function CartPage() {
     </div>
   );
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434

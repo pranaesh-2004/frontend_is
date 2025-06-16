@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useReducer, useState } from 'react';
+=======
+import React, { useEffect, useReducer, useState, useRef } from 'react';
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
 import { useParams } from 'react-router-dom';
 import Search from '../../components/Search/Search';
 import Tags from '../../components/Tags/Tags';
@@ -10,6 +14,7 @@ import {
   search,
 } from '../../services/foodService';
 import NotFound from '../../components/NotFound/NotFound';
+<<<<<<< HEAD
 import Loading from '../../components/Loading/Loading';
 import './HomePage.css';
 import aboutImage from '../../components/assets/images/about.png';
@@ -32,12 +37,27 @@ const reducer = (state, action) => {
       return { ...state, foods: action.payload, loading: false };
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload };
+=======
+import './HomePage.css';
+import bannerImage from '../../components/assets/images/banner.png';
+import aboutImage from '../../components/assets/images/about.png';
+
+const initialState = { foods: [], tags: [] };
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FOODS_LOADED':
+      return { ...state, foods: action.payload };
+    case 'TAGS_LOADED':
+      return { ...state, tags: action.payload };
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
     default:
       return state;
   }
 };
 
 export default function HomePage() {
+<<<<<<< HEAD
   const [{ foods, tags, loading, error }, dispatch] = useReducer(reducer, initialState);
   const { searchTerm, tag } = useParams();
 
@@ -77,10 +97,19 @@ export default function HomePage() {
 
     return () => clearInterval(interval);
   }, [bannerImages]);
+=======
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { foods, tags } = state;
+  const { searchTerm, tag } = useParams();
+
+  const [loading, setLoading] = useState(true);
+  const hasLoadedOnce = useRef(false); // <- flag to prevent multiple loading triggers
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
 
   useEffect(() => {
     let isMounted = true;
 
+<<<<<<< HEAD
     const fetchData = async () => {
       dispatch({ type: 'FETCH_START' });
       try {
@@ -88,11 +117,29 @@ export default function HomePage() {
           getAllTags(),
           tag ? getAllByTag(tag) : searchTerm ? search(searchTerm) : getAll(),
         ]);
+=======
+    async function fetchData() {
+      if (!hasLoadedOnce.current) {
+        setLoading(true); // show loading only first time
+      }
+
+      try {
+        const [tagsData, foodsData] = await Promise.all([
+          getAllTags(),
+          tag
+            ? getAllByTag(tag)
+            : searchTerm
+            ? search(searchTerm)
+            : getAll(),
+        ]);
+
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
         if (isMounted) {
           dispatch({ type: 'TAGS_LOADED', payload: tagsData });
           dispatch({ type: 'FOODS_LOADED', payload: foodsData });
         }
       } catch (err) {
+<<<<<<< HEAD
         if (isMounted) {
           dispatch({ type: 'FETCH_ERROR', payload: err.message || 'Failed to load data.' });
         }
@@ -100,18 +147,36 @@ export default function HomePage() {
     };
 
     fetchData();
+=======
+        console.error('Error loading data:', err);
+      } finally {
+        if (isMounted && !hasLoadedOnce.current) {
+          setLoading(false);
+          hasLoadedOnce.current = true;
+        }
+      }
+    }
+
+    fetchData();
+
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
     return () => {
       isMounted = false;
     };
   }, [searchTerm, tag]);
 
   return (
+<<<<<<< HEAD
     <div className="home-page" style={{ backgroundColor: bgColor, transition: 'background-color 1s ease-in-out' }}>
       
+=======
+    <div className="home-page">
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
       {/* Hero Section */}
       <section
         className="hero-section"
         style={{
+<<<<<<< HEAD
           backgroundImage:
             bannerImages.length > 0
               ? `url(${bannerImages[currentImageIndex]})`
@@ -120,6 +185,11 @@ export default function HomePage() {
           backgroundPosition: 'center',
           minHeight: '60vh',
           transition: 'background-image 1s ease-in-out, background-color 1s ease-in-out',
+=======
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bannerImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
         }}
       >
         <div className="hero-content animated fadeInDown">
@@ -139,11 +209,17 @@ export default function HomePage() {
         </div>
 
         {loading ? (
+<<<<<<< HEAD
           <Loading />
         ) : error ? (
           <NotFound linkText="Try Again" message={error} />
         ) : foods.length === 0 ? (
           <NotFound linkText="Reset Search" message="No items found." />
+=======
+          <div className="loading">Loading...</div>
+        ) : foods.length === 0 ? (
+          <NotFound linkText="Reset Search" />
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
         ) : (
           <Thumbnails foods={foods} />
         )}
@@ -174,7 +250,11 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
+<<<<<<< HEAD
       <section className="about-us-section fadeInUp" style={{ backgroundColor: bgColor, transition: 'background-color 1s ease-in-out' }}>
+=======
+      <section className="about-us-section fadeInUp">
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
         <div className="container">
           <h2 className="section-title"><br />About Us</h2>
           <div className="about-us-content">
@@ -184,8 +264,14 @@ export default function HomePage() {
                 At Isvaryam, we are committed to delivering nature’s best straight
                 from our farms to your home. Our journey began with a mission to
                 promote healthier lifestyles through organic, sustainable, and
+<<<<<<< HEAD
                 chemical-free food. Transparency and tradition drive us—every
                 product reflects our values. Experience nature’s true taste.
+=======
+                chemical-free food. We believe in transparency, purity, and tradition—every product is a
+                reflection of our values and deep-rooted farming expertise. Experience
+                the true taste of nature with Isvaryam.
+>>>>>>> 4228c54e0c651cc8601ee0dcbc07ab673a979434
               </p>
             </div>
           </div>
